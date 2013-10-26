@@ -1,0 +1,16 @@
+{
+  "CFBundleName" : "${APP}",
+  "CFBundleIdentifier" : "com.github.kavu.cocoa-go",
+  "CFBundleInfoDictionaryVersion" : "6.0",
+  "CFBundleVersion" : "1",
+  "CFBundleExecutable" : "${APP}",
+  "NSPrincipalClass" : "NSApplication",
+  "CFBundlePackageType" : "APPL",
+  "CFBundleIconFile" : "gopher.icns",
+  "CFBundleSignature" : "cocg",
+  "NSMainNibFile" : "MainMenu",
+  "LSMinimumSystemVersion" : "10.8.0",
+  "CFBundleDevelopmentRegion" : "en",
+  "NSHumanReadableCopyright" : "Copyright © 2013 Max Riveiro. All rights reserved.",
+  "CFBundleShortVersionString" : "1.0"
+}

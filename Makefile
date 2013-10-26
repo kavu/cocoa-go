@@ -1,6 +1,7 @@
 APP=Cocoa\ Go
-APPDIR=$(APP).app
-GOSRC=exported.go main.go
+APPDIR=bin/$(APP).app
+GOSRC=src/header.h src/c_funcs.c src/do_button.c src/exported.go src/main.go
+CC=clang
 
 all: $(APP)
 
@@ -8,24 +9,29 @@ all: $(APP)
 $(APP): \
 	$(APPDIR)/Contents/MacOS/$(APP) \
 	$(APPDIR)/Contents/Resources/Base.lproj/MainMenu.nib \
+	$(APPDIR)/Contents/Resources/gopher.icns \
 	$(APPDIR)/Contents/Info.plist \
 	$(APPDIR)/Contents/PkgInfo
 
-$(APPDIR)/Contents/MacOS/$(APP): $(GOSRC)
+$(APPDIR)/Contents/MacOS/$(APP): $(GOSRC) src/
 	-mkdir -p "`dirname \"$@\"`"
-	CC=clang go build -o "$@"
+	cd src/ && CC=$(CC) go build -o "$(CURDIR)/$@"
 
-$(APPDIR)/Contents/Resources/Base.lproj/MainMenu.nib: MainMenu.xib
+$(APPDIR)/Contents/Resources/Base.lproj/MainMenu.nib: res/MainMenu.xib
 	-mkdir -p "`dirname \"$@\"`"
-	ibtool --compile "$@" MainMenu.xib
+	ibtool --compile "$@" $<
 
-$(APPDIR)/Contents/Info.plist: Info.plist
-	-mkdir -p "`dirname \"$@\"`"
-	sed -e 's/$$[{]APP}'/$(APP)/ Info.plist > "$@"
+$(APPDIR)/Contents/Resources/gopher.icns: res/gopher.png
+		sips -z 512 512 -s format icns $< --out "$@"
 
-$(APPDIR)/Contents/PkgInfo: PkgInfo
+$(APPDIR)/Contents/Info.plist: res/Info.plist.json
 	-mkdir -p "`dirname \"$@\"`"
-	cp PkgInfo "$@"
+	sed -e 's/$$[{]APP}'/$(APP)/ $< > "$@"
+	plutil -convert xml1 "$@"
+
+$(APPDIR)/Contents/PkgInfo: res/PkgInfo
+	-mkdir -p "`dirname \"$@\"`"
+	cp $< "$@"
 
 clean:
 	-rm -r $(APPDIR)

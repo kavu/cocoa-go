@@ -1,4 +1,2 @@
-cocoa-go
-app.nib
-CocoaGo.app/
+bin/
 .DS_Store
