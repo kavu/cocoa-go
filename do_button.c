@@ -2,7 +2,7 @@
 
 NSTextField *label;
 
-@interface DoButton : NSButtonCell {}
+@interface DoButton : NSButtonCell
     - (IBAction)performClick:(id)sender;
 @end
 
