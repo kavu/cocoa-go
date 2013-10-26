@@ -2,6 +2,7 @@ APP=Cocoa\ Go
 APPDIR=bin/$(APP).app
 GOSRC=src/header.h src/c_funcs.c src/do_button.c src/exported.go src/main.go
 CC=clang
+TEMPXIB=tmp.xib
 
 all: $(APP)
 
@@ -19,10 +20,12 @@ $(APPDIR)/Contents/MacOS/$(APP): $(GOSRC) src/
 
 $(APPDIR)/Contents/Resources/Base.lproj/MainMenu.nib: res/MainMenu.xib
 	-mkdir -p "`dirname \"$@\"`"
-	ibtool --compile "$@" $<
+	sed -e 's/$$[{]APP}'/$(APP)/ $< > $(TEMPXIB)
+	ibtool --compile "$@" $(TEMPXIB)
+	rm $(TEMPXIB)
 
 $(APPDIR)/Contents/Resources/gopher.icns: res/gopher.png
-		sips -z 512 512 -s format icns $< --out "$@"
+	sips -z 512 512 -s format icns $< --out "$@"
 
 $(APPDIR)/Contents/Info.plist: res/Info.plist.json
 	-mkdir -p "`dirname \"$@\"`"
