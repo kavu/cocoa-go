@@ -1,4 +1,4 @@
-APP=CocoaGo
+APP=Cocoa\ Go
 APPDIR=$(APP).app
 GOSRC=exported.go main.go
 
@@ -12,19 +12,20 @@ $(APP): \
 	$(APPDIR)/Contents/PkgInfo
 
 $(APPDIR)/Contents/MacOS/$(APP): $(GOSRC)
-	-mkdir -p $(APPDIR)/Contents/MacOS
-	CC=clang go build -o $@
+	-mkdir -p "`dirname \"$@\"`"
+	CC=clang go build -o "$@"
 
 $(APPDIR)/Contents/Resources/Base.lproj/MainMenu.nib: MainMenu.xib
-	-mkdir -p `dirname $@`
-	-rm $@
-	ibtool --compile $@ MainMenu.xib
+	-mkdir -p "`dirname \"$@\"`"
+	ibtool --compile "$@" MainMenu.xib
 
 $(APPDIR)/Contents/Info.plist: Info.plist
+	-mkdir -p "`dirname \"$@\"`"
 	sed -e 's/$$[{]APP}'/$(APP)/ Info.plist > "$@"
 
 $(APPDIR)/Contents/PkgInfo: PkgInfo
-	cp PkgInfo $@
+	-mkdir -p "`dirname \"$@\"`"
+	cp PkgInfo "$@"
 
 clean:
 	-rm -r $(APPDIR)
