@@ -8,5 +8,3 @@ void SetLabelText(const char *str) {
         [label setStringValue:text];
     }
 }
-
-

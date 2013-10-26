@@ -5,7 +5,6 @@ package main
 #cgo LDFLAGS: -framework Cocoa
 
 extern int NSApplicationMain(int, const char *[]);
-
 */
 import "C"
 
