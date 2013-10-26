@@ -2,10 +2,10 @@
 
 extern NSTextField *label;
 
-void SetLabelText(const char* str){
+void SetLabelText(const char *str) {
     @autoreleasepool {
-        NSString* text = [NSString stringWithUTF8String:str];
-        [label setStringValue: text];
+        NSString *text = [NSString stringWithUTF8String:str];
+        [label setStringValue:text];
     }
 }
 

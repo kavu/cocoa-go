@@ -7,12 +7,9 @@ NSTextField *label;
 @end
 
 @implementation DoButton
-    - (IBAction)performClick:(id)sender;
-    {
-        NSWindow* window = [NSApp mainWindow];
-
-        if (!label)
-        {
+    - (IBAction)performClick:(id)sender {
+        NSWindow *window = [NSApp mainWindow];
+        if (!label) {
             label = [[NSTextField new] autorelease];
             [label setFrame:CGRectMake(100,100,40,40)];
 
@@ -25,7 +22,6 @@ NSTextField *label;
         } else {
             [label setStringValue:@"Hi Label"];
         }
-
         go_Test();
     }
 @end
