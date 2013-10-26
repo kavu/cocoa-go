@@ -1,7 +1,7 @@
 package main
 
 /*
-extern void SetLabelText(const char*);
+extern void SetLabelText(const char *);
 */
 import "C"
 

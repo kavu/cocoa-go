@@ -1,2 +1,4 @@
 cocoa-go
 app.nib
+CocoaGo.app/
+.DS_Store

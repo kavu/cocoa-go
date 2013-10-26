@@ -1,13 +1,31 @@
-APP=app
+APP=Cocoa\ Go
+APPDIR=$(APP).app
+GOSRC=exported.go main.go
 
-all: cocoa-go $(APP).nib
+all: $(APP)
 
-cocoa-go: exported.go main.go
-	CC=clang go build
+.PHONY: $(APP)
+$(APP): \
+	$(APPDIR)/Contents/MacOS/$(APP) \
+	$(APPDIR)/Contents/Resources/Base.lproj/MainMenu.nib \
+	$(APPDIR)/Contents/Info.plist \
+	$(APPDIR)/Contents/PkgInfo
 
-$(APP).nib: $(APP).xib
-	-rm $(APP).nib
-	ibtool --compile $(APP).nib $(APP).xib
+$(APPDIR)/Contents/MacOS/$(APP): $(GOSRC)
+	-mkdir -p "`dirname \"$@\"`"
+	CC=clang go build -o "$@"
+
+$(APPDIR)/Contents/Resources/Base.lproj/MainMenu.nib: MainMenu.xib
+	-mkdir -p "`dirname \"$@\"`"
+	ibtool --compile "$@" MainMenu.xib
+
+$(APPDIR)/Contents/Info.plist: Info.plist
+	-mkdir -p "`dirname \"$@\"`"
+	sed -e 's/$$[{]APP}'/$(APP)/ Info.plist > "$@"
+
+$(APPDIR)/Contents/PkgInfo: PkgInfo
+	-mkdir -p "`dirname \"$@\"`"
+	cp PkgInfo "$@"
 
 clean:
-	-rm cocoa-app $(APP).nib
+	-rm -r $(APPDIR)

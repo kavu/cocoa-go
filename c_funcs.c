@@ -2,26 +2,9 @@
 
 extern NSTextField *label;
 
-void RunApp() {
+void SetLabelText(const char *str) {
     @autoreleasepool {
-        NSArray* objects = [[NSArray new] autorelease];
-
-        [NSApplication sharedApplication];
-
-        [[NSBundle mainBundle] loadNibNamed:@"app" owner:NSApp topLevelObjects:&objects];
-
-        [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
-        [NSApp activateIgnoringOtherApps:YES];
-
-        [NSApp run];
+        NSString *text = [NSString stringWithUTF8String:str];
+        [label setStringValue:text];
     }
 }
-
-void SetLabelText(const char* str){
-    @autoreleasepool {
-        NSString* text = [NSString stringWithUTF8String:str];
-        [label setStringValue: text];
-    }
-}
-
-
