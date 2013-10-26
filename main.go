@@ -4,10 +4,11 @@ package main
 #cgo CFLAGS: -x objective-c
 #cgo LDFLAGS: -framework Cocoa
 
-extern void RunApp(void);
+extern int NSApplicationMain(int, const char *[]);
+
 */
 import "C"
 
 func main() {
-	C.RunApp()
+	C.NSApplicationMain(0, nil)
 }
