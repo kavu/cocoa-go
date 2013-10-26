@@ -21,7 +21,7 @@ $(APPDIR)/Contents/Resources/Base.lproj/MainMenu.nib: MainMenu.xib
 	ibtool --compile $@ MainMenu.xib
 
 $(APPDIR)/Contents/Info.plist: Info.plist
-	cp Info.plist $@
+	sed -e 's/$$[{]APP}'/$(APP)/ Info.plist > "$@"
 
 $(APPDIR)/Contents/PkgInfo: PkgInfo
 	cp PkgInfo $@
