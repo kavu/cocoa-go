@@ -16,7 +16,7 @@ $(APP): \
 
 $(APPDIR)/Contents/MacOS/$(APP): $(GOSRC) src/
 	-mkdir -p "`dirname \"$@\"`"
-	cd src/ && CC=$(CC) go build -o "$(CURDIR)/$@"
+	cd src/ && CC=$(CC) go build -ldflags="-linkmode=external" -o "$(CURDIR)/$@"
 
 $(APPDIR)/Contents/Resources/Base.lproj/MainMenu.nib: res/MainMenu.xib
 	-mkdir -p "`dirname \"$@\"`"
